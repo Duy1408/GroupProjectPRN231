@@ -9,7 +9,7 @@ namespace BusinessObject.BusinessObject
     public class RealEstate
     {
         public int RealEstateID { get; set; }
-        public string RealEstateName { get; set; }
+        public string? RealEstateName  { get; set; }
 
       public string RealEstateAddress { get; set; }
 

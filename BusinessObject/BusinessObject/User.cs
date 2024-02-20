@@ -16,11 +16,13 @@ namespace BusinessObject.BusinessObject
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public int RoleID { get; set; }
+       
         public Role Role { get; set; }
 
         public int BidID { get; set; }
         public Bid Bid { get; set; }
         public List<RealEstate> RealEstates { get; set; }
+ 
 
         public List<Comment> Comments { get; set; } 
     }

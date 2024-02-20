@@ -1,3 +1,5 @@
+
+using Newtonsoft.Json;
 using Repo;
 using Repo.Interface;
 using Service;
@@ -11,10 +13,10 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-//builder.Services.AddMvc()
-//  .AddNewtonsoftJson(
-//          options => { options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore; }
-//      );
+builder.Services.AddMvc()
+     .AddNewtonsoftJson(
+          options => { options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore; }
+      );
 
 
 
