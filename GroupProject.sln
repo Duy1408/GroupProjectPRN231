@@ -5,11 +5,13 @@ VisualStudioVersion = 17.7.34202.233
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessObject", "BusinessObject\BusinessObject.csproj", "{4740EEFB-2574-4422-9AE4-DA8D2173EAB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealEstateDAO", "RealEstateDAO\RealEstateDAO.csproj", "{294FE78E-2CC9-4E71-B4EB-1F343CA68D71}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAO", "DAO\DAO.csproj", "{55FB0E09-8B88-4050-AFCB-38F287EA8B7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealEstateRepo", "RealEsrtateRepo\RealEstateRepo.csproj", "{71A8CFFF-9D80-4560-A116-7D47472F35B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repo", "Repo\Repo.csproj", "{247D1EF6-48E1-40C1-9267-408970D8983D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealEstate", "RealEstate\RealEstate.csproj", "{8C34EF65-6A34-41F8-9E3A-3CB35A67B640}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service", "Service\Service.csproj", "{66A987B0-4E46-4ED6-A89F-3882CD50925F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroupProject", "GroupProject\GroupProject.csproj", "{EF939913-4495-4724-8945-546227B45A2B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,18 +23,22 @@ Global
 		{4740EEFB-2574-4422-9AE4-DA8D2173EAB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4740EEFB-2574-4422-9AE4-DA8D2173EAB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4740EEFB-2574-4422-9AE4-DA8D2173EAB5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{294FE78E-2CC9-4E71-B4EB-1F343CA68D71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{294FE78E-2CC9-4E71-B4EB-1F343CA68D71}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{294FE78E-2CC9-4E71-B4EB-1F343CA68D71}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{294FE78E-2CC9-4E71-B4EB-1F343CA68D71}.Release|Any CPU.Build.0 = Release|Any CPU
-		{71A8CFFF-9D80-4560-A116-7D47472F35B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{71A8CFFF-9D80-4560-A116-7D47472F35B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{71A8CFFF-9D80-4560-A116-7D47472F35B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{71A8CFFF-9D80-4560-A116-7D47472F35B0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8C34EF65-6A34-41F8-9E3A-3CB35A67B640}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8C34EF65-6A34-41F8-9E3A-3CB35A67B640}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8C34EF65-6A34-41F8-9E3A-3CB35A67B640}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8C34EF65-6A34-41F8-9E3A-3CB35A67B640}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55FB0E09-8B88-4050-AFCB-38F287EA8B7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55FB0E09-8B88-4050-AFCB-38F287EA8B7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55FB0E09-8B88-4050-AFCB-38F287EA8B7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55FB0E09-8B88-4050-AFCB-38F287EA8B7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{247D1EF6-48E1-40C1-9267-408970D8983D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{247D1EF6-48E1-40C1-9267-408970D8983D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{247D1EF6-48E1-40C1-9267-408970D8983D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{247D1EF6-48E1-40C1-9267-408970D8983D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66A987B0-4E46-4ED6-A89F-3882CD50925F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66A987B0-4E46-4ED6-A89F-3882CD50925F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66A987B0-4E46-4ED6-A89F-3882CD50925F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66A987B0-4E46-4ED6-A89F-3882CD50925F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF939913-4495-4724-8945-546227B45A2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF939913-4495-4724-8945-546227B45A2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF939913-4495-4724-8945-546227B45A2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF939913-4495-4724-8945-546227B45A2B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

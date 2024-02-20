@@ -21,6 +21,8 @@ namespace BusinessObject.FluentAPI
             builder.Property(x => x.Email);
             builder.Property(x => x.PhoneNumber);
             builder.HasMany(x => x.Comments).WithOne(x => x.User).OnDelete(DeleteBehavior.NoAction);
+            builder.HasMany(x => x.RealEstates).WithOne(x => x.User).OnDelete(DeleteBehavior.NoAction);
+
 
         }
     }

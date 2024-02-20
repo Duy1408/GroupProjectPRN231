@@ -20,6 +20,7 @@ namespace BusinessObject.BusinessObject
 
         public int BidID { get; set; }
         public Bid Bid { get; set; }
+        public List<RealEstate> RealEstates { get; set; }
 
         public List<Comment> Comments { get; set; } 
     }

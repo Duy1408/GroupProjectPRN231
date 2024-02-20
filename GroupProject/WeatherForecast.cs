@@ -1,4 +1,4 @@
-namespace RealEstate
+namespace GroupProject
 {
     public class WeatherForecast
     {

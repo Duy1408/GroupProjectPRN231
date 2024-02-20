@@ -18,5 +18,7 @@ namespace BusinessObject.BusinessObject
         public bool Status { get; set; }
         public List<Auction> Autions { get; set; }
         public List<Comment> Comments { get; set; }
+        public int UserID { get; set; }
+        public User User { get; set; }
     }
 }
