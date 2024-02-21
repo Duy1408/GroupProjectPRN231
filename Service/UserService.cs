@@ -11,40 +11,25 @@ namespace Service
 {
     public class UserService : IUserService
     {
-        private IUserRepo _user;
-        public UserService(IUserRepo user)
+        private readonly IUserRepo _userRepo;
+        public UserService(IUserRepo userRepo)
         {
-            _user = user;
+            _userRepo = userRepo;
         }
 
-        public void AddNewUser(User user)
-        {
-            _user.AddNewUser(user);
-        }
+        public void AddNewUser(User user) => _userRepo.AddNewUser(user);
 
-        public void DeleteUser(User user)
-        {
-            _user.DeleteUser(user);
-        }
+        public bool ChangeStatusUser(User user) => _userRepo.ChangeStatusUser(user);
 
-        public User GetUserById(int id)
-        {
-            return _user.GetUserById(id);
-        }
+        public User CheckLogin(string email, string password) => _userRepo.CheckLogin(email, password);
 
-        public List<User> GetUsers()
-        {
-            return _user.GetUsers();
-        }
+        public List<User> GetAllUser() => _userRepo.GetAllUser();
 
-        public IQueryable<User> SearchUser(string name)
-        {
-            return _user.SearchUser(name);
-        }
+        public User GetUserByID(int id) => _userRepo.GetUserByID(id);
 
-        public void UpdateUser(User user)
-        {
-            _user.UpdateUser(user);
-        }
+        public IQueryable<User> SearchUser(string name) => _userRepo.SearchUser(name);
+
+        public void UpdateUser(User user) => _userRepo.UpdateUser(user);
+
     }
 }

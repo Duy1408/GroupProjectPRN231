@@ -11,40 +11,20 @@ namespace Repo
 {
     public class UserRepo : IUserRepo
     {
-        private UserDAO dao;
-        public UserRepo()
-        {
-            dao = new UserDAO();
-        }
+        UserDAO dao = new UserDAO();
+        public void AddNewUser(User user) => dao.AddNewUser(user);
 
-        public void AddNewUser(User user)
-        {
-            dao.AddNewUser(user);
-        }
+        public bool ChangeStatusUser(User user) => dao.ChangeStatusUser(user);
 
-        public void DeleteUser(User user)
-        {
-            dao.DeleteUser(user);
-        }
+        public User CheckLogin(string email, string password) => dao.CheckLogin(email, password);
 
-        public User GetUserById(int id)
-        {
-            return dao.GetUserByID(id);
-        }
+        public List<User> GetAllUser() => dao.GetAllUser();
 
-        public List<User> GetUsers()
-        {
-            return dao.GetAllUser();
-        }
+        public User GetUserByID(int id) => dao.GetUserByID(id);
 
-        public IQueryable<User> SearchUser(string name)
-        {
-            return dao.SearchUserByName(name);
-        }
+        public IQueryable<User> SearchUser(string name) => dao.SearchUserByName(name);
 
-        public void UpdateUser(User user)
-        {
-            dao.UpdateUser(user);
-        }
+        public void UpdateUser(User user) => dao.UpdateUser(user);
+
     }
 }
