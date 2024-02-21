@@ -13,6 +13,7 @@ namespace BusinessObject.BusinessObject
         public string Content { get; set; }
         public int Rate { get; set; }
         public int RealEstateID { get; set; }
+        public bool Status { get; set; }
          public RealEstate RealEstate { get; set; }
         public int UserID { get; set; }
         public User User { get; set; }
