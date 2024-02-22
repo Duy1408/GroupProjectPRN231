@@ -7,6 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BusinessObject.BusinessObject;
 using Service.Interface;
+using AutoMapper;
+using BusinessObject.ViewModels;
+using System.Security.Principal;
+using BusinessObject.DTO;
 
 namespace GroupProject.Controllers.UserController
 {
@@ -14,105 +18,101 @@ namespace GroupProject.Controllers.UserController
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly IUserService _user;
+        private readonly IUserService _userServices;
+        private readonly IMapper _mapper;
 
-        public UsersController(IUserService user)
+        public UsersController(IUserService userServices, IMapper mapper)
         {
-            _user = user;
+            _userServices = userServices;
+            _mapper = mapper;
         }
 
-        // GET: api/Users
         [HttpGet]
-        public ActionResult<IEnumerable<User>> GetUsers()
+        public IActionResult GetAllUser()
         {
-          if (_user.GetUsers() == null)
-          {
-              return NotFound();
-          }
-            return  _user.GetUsers().ToList();
-        }
-
-        // GET: api/Users/5
-        [HttpGet("{id}")]
-        public ActionResult<User> GetUser(int id)
-        {
-          if (_user.GetUsers()== null)
-          {
-              return NotFound();
-          }
-            var user =  _user.GetUserById(id);
-
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            return user;
-        }
-
-        // PUT: api/Users/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
-        {
-            if (_user.GetUsers()==null)
-            {
-                return BadRequest();
-            }
-
-
             try
             {
-
-                _user.UpdateUser(user);
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (_user.GetUserById(id)==null)
+                if (_userServices.GetAllUser() == null)
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+                var users = _userServices.GetAllUser();
+                var response = _mapper.Map<List<UserVM>>(users);
+
+                return Ok(response);
             }
-
-            return NoContent();
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        // POST: api/Users
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpGet("{id}")]
+        public IActionResult GetUserByID(int id)
+        {
+            var user = _userServices.GetUserByID(id);
+
+            var responese = _mapper.Map<UserVM>(user);
+
+            return Ok(responese);
+        }
+
         [HttpPost]
-        public ActionResult<User> PostUser(User user)
+        public IActionResult AddNewUser(UserVM user)
         {
-          if (_user.GetUsers() == null)
-          {
-              return Problem("Entity set 'TheRealEstateDBContext.Users'  is null.");
-          }
-            _user.AddNewUser(user);
+            try
+            {
+                var _user = _mapper.Map<User>(user);
+                _userServices.AddNewUser(_user);
 
-            return CreatedAtAction("GetUser", new { id = user.UserID }, user);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        // DELETE: api/Users/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
+        [HttpPut]
+        public IActionResult UpdateUser(UserDTO user, int id)
         {
-            if (_user.GetUsers()== null)
+            try
+            {
+                if (user.UserID != id)
+                {
+                    return NotFound();
+                }
+                var _user = _mapper.Map<User>(user);
+                _userServices.UpdateUser(_user);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteUser(int id)
+        {
+            if (_userServices.GetAllUser() == null)
             {
                 return NotFound();
             }
-            var user = _user.GetUserById(id);
+            var user = _userServices.GetUserByID(id);
             if (user == null)
             {
                 return NotFound();
             }
 
-            _user.DeleteUser(user);
+            _userServices.ChangeStatusUser(user);
 
-            return NoContent();
+
+            return Ok("Delete Successfully");
         }
+
+
 
 
     }

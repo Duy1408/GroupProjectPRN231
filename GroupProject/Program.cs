@@ -1,9 +1,13 @@
 
+using GroupProject.Mapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Repo;
 using Repo.Interface;
 using Service;
 using Service.Interface;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,9 +24,28 @@ builder.Services.AddMvc()
 
 
 
-builder.Services.AddTransient<IRealEstateRepo,RealEstateRepo>();
+builder.Services.AddTransient<IRealEstateRepo, RealEstateRepo>();
 builder.Services.AddTransient<IRealEstateService, RealEstateService>();
 
+builder.Services.AddScoped<IUserRepo, UserRepo>();
+builder.Services.AddScoped<IUserService, UserService>();
+
+builder.Services.AddAutoMapper(typeof(ApplicationMapper));
+
+//Jwt
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+{
+    options.RequireHttpsMetadata = false;
+    options.SaveToken = true;
+    options.TokenValidationParameters = new TokenValidationParameters()
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+    };
+});
 
 
 var app = builder.Build();
@@ -35,6 +58,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
