@@ -20,5 +20,6 @@ namespace BusinessObject.BusinessObject
         public List<Comment> Comments { get; set; }
         public int UserID { get; set; }
         public User User { get; set; }
+        public List<Propertie> Properties { get; set; } 
     }
 }

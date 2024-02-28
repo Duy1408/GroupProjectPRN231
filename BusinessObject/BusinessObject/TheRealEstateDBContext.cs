@@ -25,6 +25,7 @@ namespace BusinessObject.BusinessObject
         public virtual DbSet<Comment>? Comments { get; set; }
         public virtual DbSet<User>? Users { get; set; }
         public virtual DbSet<RealEstate>? RealEstates { get; set; }
+        public virtual DbSet<Propertie>? Properties { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
