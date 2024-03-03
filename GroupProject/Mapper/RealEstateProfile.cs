@@ -1,0 +1,88 @@
+﻿using AutoMapper;
+using BusinessObject.BusinessObject;
+using BusinessObject.DTO.Request;
+using BusinessObject.DTO.Response;
+
+namespace GroupProject.Mapper
+{
+    public class RealEstateProfile : Profile
+    {
+        public RealEstateProfile()
+        {
+
+            CreateMap<RealEstate, RealEstateCreateDTO >()
+
+            .ForMember(
+                dest => dest.RealEstateName,
+                opt => opt.MapFrom(src => src.RealEstateName)
+            )
+            .ForMember(
+                dest => dest.RealEstateAddress,
+                opt => opt.MapFrom(src => src.RealEstateAddress)
+            )
+            .ForMember(
+                dest => dest.Estimation,
+                opt => opt.MapFrom(src => src.Estimation)
+            ).ForMember(
+                dest => dest.Description,
+                opt => opt.MapFrom(src => src.Description)
+            )
+            .ForMember(
+                dest => dest.UserID,
+                opt => opt.MapFrom(src => src.UserID)
+            )
+            .ForMember(
+                dest => dest.Status,
+                opt => opt.MapFrom(src => src.Status)
+            );
+
+           CreateMap<RealEstate, RealEstateResponseDTO>()
+
+          .ForMember(
+              dest => dest.RealEstateName,
+              opt => opt.MapFrom(src => src.RealEstateName)
+          )
+          .ForMember(
+              dest => dest.RealEstateAddress,
+              opt => opt.MapFrom(src => src.RealEstateAddress)
+          )
+          .ForMember(
+              dest => dest.Estimation,
+              opt => opt.MapFrom(src => src.Estimation)
+          ).ForMember(
+              dest => dest.Description,
+              opt => opt.MapFrom(src => src.Description)
+          )
+          .ForMember(
+              dest => dest.Status,
+              opt => opt.MapFrom(src => src.Status)
+          );
+
+            CreateMap<RealEstateUpdateDTO, RealEstate>()
+
+         
+         .ForMember(
+             dest => dest.Estimation,
+             opt => opt.MapFrom(src => src.Estimation)
+         ).ForMember(
+             dest => dest.Description,
+             opt => opt.MapFrom(src => src.Description)
+         )
+         .ForMember(
+             dest => dest.UserID,
+             opt => opt.MapFrom(src => src.UserID)
+         )
+         .ForMember(
+             dest => dest.Status,
+             opt => opt.MapFrom(src => src.Status)
+         );
+         
+
+
+
+
+
+        }
+        }
+    }
+

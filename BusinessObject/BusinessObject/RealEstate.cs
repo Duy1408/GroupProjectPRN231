@@ -11,7 +11,7 @@ namespace BusinessObject.BusinessObject
         public int RealEstateID { get; set; }
         public string? RealEstateName  { get; set; }
 
-      public string RealEstateAddress { get; set; }
+        public string RealEstateAddress { get; set; }
 
         public double Estimation {  get; set; }
         public string Description { get; set; }

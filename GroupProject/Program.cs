@@ -34,6 +34,7 @@ builder.Services.AddTransient<IRealEstateService, RealEstateService>();
 builder.Services.AddScoped<IUserRepo, UserRepo>();
 builder.Services.AddScoped<IUserService, UserService>();
 
+
 builder.Services.AddAutoMapper(typeof(ApplicationMapper));
 
 //Jwt

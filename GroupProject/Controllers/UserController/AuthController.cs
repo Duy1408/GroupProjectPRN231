@@ -1,7 +1,9 @@
-﻿using BusinessObject.ViewModels;
+﻿using BusinessObject.BusinessObject;
+using BusinessObject.ViewModels;
 using GroupProject.Admin;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
 using Service.Interface;
 using System.IdentityModel.Tokens.Jwt;
@@ -10,6 +12,8 @@ using System.Text;
 
 namespace GroupProject.Controllers.UserController
 {
+
+
     [Route("api/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase

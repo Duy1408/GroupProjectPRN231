@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BusinessObject.BusinessObject;
 using Service.Interface;
+using AutoMapper;
+using GroupProject.Mapper;
+using BusinessObject.DTO.Response;
 
 namespace GroupProject.Controllers.RealEstateController
 {
@@ -29,7 +32,19 @@ namespace GroupProject.Controllers.RealEstateController
           {
               return NotFound();
           }
-            return _service.GetRealEstates().ToList();
+
+        
+            var config = new MapperConfiguration(
+                cfg => cfg.AddProfile(new RealEstateProfile())
+            );
+            // create mapper
+            var mapper = config.CreateMapper();
+
+            
+
+            var data = _service.GetRealEstates().ToList().Select(estate => mapper.Map<RealEstate, RealEstateResponseDTO>(estate));
+                
+            return Ok(data);
         }
 
         // GET: api/RealEstates/5
