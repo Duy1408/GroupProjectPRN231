@@ -10,7 +10,7 @@ namespace GroupProject.Mapper
         public RealEstateProfile()
         {
 
-            CreateMap<RealEstate, RealEstateCreateDTO >()
+            CreateMap < RealEstateCreateDTO, RealEstate>()
 
             .ForMember(
                 dest => dest.RealEstateName,

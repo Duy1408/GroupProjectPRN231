@@ -10,6 +10,7 @@ using Service.Interface;
 using AutoMapper;
 using GroupProject.Mapper;
 using BusinessObject.DTO.Response;
+using BusinessObject.DTO.Request;
 
 namespace GroupProject.Controllers.RealEstateController
 {
@@ -68,18 +69,30 @@ namespace GroupProject.Controllers.RealEstateController
         // PUT: api/RealEstates/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public IActionResult UpdateRealEstate(int id, RealEstate realEstate)
+        public IActionResult UpdateRealEstate(int id, [FromForm] RealEstateUpdateDTO estateUpdateDTO)
         {
-            if (_service.GetRealEstates()==null)
+           try
             {
-                return BadRequest();
-            }
 
-      
+                var estate = _service.GetRealEstateById(id);
 
-            try
-            {
-                _service.UpdateRealEstate(realEstate);
+                if (estateUpdateDTO.Estimation != null)
+                {
+                    estate.Estimation = estateUpdateDTO.Estimation;
+                }
+                if (estateUpdateDTO.Description != null)
+                {
+                    estate.Description = estateUpdateDTO.Description;
+                }
+                if (estateUpdateDTO.UserID!= null)
+                {
+                    estate.UserID = estateUpdateDTO.UserID;
+                }
+                if (estateUpdateDTO.Status != null)
+                {
+                    estate.Status = estateUpdateDTO.Status;
+                }
+                _service.UpdateRealEstate(estate);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -93,22 +106,23 @@ namespace GroupProject.Controllers.RealEstateController
                 }
             }
 
-            return NoContent();
+            return Ok("Update Successfully");
         }
 
         // POST: api/RealEstates
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<RealEstate>> PostRealEstate(RealEstate realEstate)
+        public ActionResult<RealEstate> PostRealEstate(RealEstateCreateDTO realEstateDTO)
         {
-          if (_service.GetRealEstates() == null)
-          {
-              return Problem("Entity set 'TheRealEstateDBContext.RealEstates'  is null.");
-          }
-            _service.AddNewRealEstate(realEstate);
-
-            return CreatedAtAction("GetRealEstate", new { id = realEstate.RealEstateID }, realEstate);
+            var config = new MapperConfiguration(
+              cfg => cfg.AddProfile(new RealEstateProfile())
+          );
+            var mapper = config.CreateMapper();
+            var estate = mapper.Map<RealEstate>(realEstateDTO);
+            _service.AddNewRealEstate(estate);
+            return Ok(estate);
         }
+       
 
         // DELETE: api/RealEstates/5
         [HttpDelete("{id}")]
