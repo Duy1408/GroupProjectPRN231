@@ -8,6 +8,7 @@ namespace BusinessObject.DTO.Response
 {
     public class RealEstateResponseDTO
     {
+        public int RealEstateID { get; set; }
         public string? RealEstateName { get; set; }
 
         public string RealEstateAddress { get; set; }

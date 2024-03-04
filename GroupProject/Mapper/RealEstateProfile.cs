@@ -37,7 +37,10 @@ namespace GroupProject.Mapper
             );
 
            CreateMap<RealEstate, RealEstateResponseDTO>()
-
+          .ForMember(
+              dest => dest.RealEstateID,
+              opt => opt.MapFrom(src => src.RealEstateID)
+          )
           .ForMember(
               dest => dest.RealEstateName,
               opt => opt.MapFrom(src => src.RealEstateName)

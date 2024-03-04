@@ -31,23 +31,7 @@ namespace DAO
 
         }
 
-        public bool AddNewAuction(Auction auction)
-        {
-            var _context = new TheRealEstateDBContext();
-            var a = _context.Auctions.SingleOrDefault(c => c.AuctionID == auction.AuctionID);
 
-            if (a != null)
-            {
-                return false;
-            }
-            else
-            {
-                _context.Auctions.Add(auction);
-                _context.SaveChanges();
-                return true;
-
-            }
-        }
-
+  
     }
 }
