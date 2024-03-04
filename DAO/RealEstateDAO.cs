@@ -75,9 +75,23 @@ namespace DAO
         {
             var _context = new TheRealEstateDBContext();
 
-            var a = _context.RealEstates.FirstOrDefault(a => a.RealEstateID == realestate.RealEstateID);
-            _context.RealEstates.Remove(a);
+            var estate = _context.RealEstates.FirstOrDefault(a => a.RealEstateID== realestate.RealEstateID);
+            if (estate != null)
+            {
+                var p = _context.Properties.Where(a => a.RealEstateID == estate.RealEstateID);
+                if (p.Count() <1)
+                {
+                    estate.Status = false;
+                    //_context.Entry(estate).CurrentValues.SetValues(realestate);
+                    _context.Entry(estate).State = EntityState.Modified;
+                }
+                else
+                {
+                    throw new Exception("Can't delete because they have more than 1 in properties!!!!!");
+                }
 
+            }
+            
             _context.SaveChanges();
         }
 

@@ -78,7 +78,7 @@ namespace GroupProject.Controllers.RealEstateController
 
                 if (estateUpdateDTO.Estimation != null)
                 {
-                    estate.Estimation = estateUpdateDTO.Estimation;
+                    estate.Estimation = (double)estateUpdateDTO.Estimation;
                 }
                 if (estateUpdateDTO.Description != null)
                 {
@@ -86,11 +86,11 @@ namespace GroupProject.Controllers.RealEstateController
                 }
                 if (estateUpdateDTO.UserID!= null)
                 {
-                    estate.UserID = estateUpdateDTO.UserID;
+                    estate.UserID = (int)estateUpdateDTO.UserID;
                 }
                 if (estateUpdateDTO.Status != null)
                 {
-                    estate.Status = estateUpdateDTO.Status;
+                    estate.Status = (bool)estateUpdateDTO.Status;
                 }
                 _service.UpdateRealEstate(estate);
             }
@@ -128,21 +128,47 @@ namespace GroupProject.Controllers.RealEstateController
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRealEstate(int id)
         {
+            try
+            {
+                if (_service.GetRealEstates() == null)
+                {
+                    return NotFound();
+                }
+                var realEstate = _service.GetRealEstateById(id);
+                if (realEstate == null)
+                {
+                    return NotFound();
+                }
+
+                _service.DeleteRealEstate(realEstate);
+
+                return Ok("Delete Successfully!!");
+
+            }
+            catch (Exception ex) {
+                return BadRequest(ex.Message);
+            }
+            
+        }
+
+        // GET: api/Cats/5
+        [HttpGet("search")]
+        public ActionResult<RealEstateResponseDTO> GetEstate(string searchValue)
+        {
             if (_service.GetRealEstates() == null)
             {
                 return NotFound();
             }
-            var realEstate =  _service.GetRealEstateById(id);
-            if (realEstate == null)
+            var estate = _service.SearchRealEstate(searchValue);
+
+            if (estate == null)
             {
                 return NotFound();
             }
 
-            _service.DeleteRealEstate(realEstate);
-
-            return NoContent();
+            return Ok(estate);
         }
 
-        
+
     }
 }
