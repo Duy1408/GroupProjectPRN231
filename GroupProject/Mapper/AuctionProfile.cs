@@ -9,7 +9,7 @@ namespace GroupProject.Mapper
     {
         public AuctionProfile()
         {
-            CreateMap<AuctionCreateDTO, Auction>()
+            CreateMap< Auction, AuctionCreateDTO>()
 
             .ForMember(
                 dest => dest.DateStart,
@@ -40,7 +40,7 @@ namespace GroupProject.Mapper
             );
 
 
-            CreateMap<AuctionUpdateDTO, Auction>()
+            CreateMap< Auction,AuctionUpdateDTO>()
 
             .ForMember(
                 dest => dest.DateStart,
@@ -70,7 +70,7 @@ namespace GroupProject.Mapper
                 opt => opt.MapFrom(src => src.RealEstateID)
             );
 
-            CreateMap<AuctionResponseDTO, Auction>()
+            CreateMap<Auction,AuctionResponseDTO>()
         .ForMember(
             dest => dest.AuctionID,
             opt => opt.MapFrom(src => src.AuctionID)

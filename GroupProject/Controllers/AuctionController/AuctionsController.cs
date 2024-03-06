@@ -7,6 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BusinessObject.BusinessObject;
 using Service.Interface;
+using AutoMapper;
+using BusinessObject.DTO.Response;
+using GroupProject.Mapper;
+using BusinessObject.DTO.Request;
+using DAO;
 
 namespace GroupProject.Controllers.AuctionController
 {
@@ -23,13 +28,24 @@ namespace GroupProject.Controllers.AuctionController
 
         // GET: api/Auctions
         [HttpGet]
-        public ActionResult<IEnumerable<Auction>> GetAuctions()
+        public ActionResult<IEnumerable<AuctionResponseDTO>> GetAuctions()
         {
           if (_auction.GetAuction() == null)
           {
               return NotFound();
           }
-            return _auction.GetAuction().ToList()
+
+            var config = new MapperConfiguration(
+                 cfg => cfg.AddProfile(new AuctionProfile())
+             );
+            // create mapper
+            var mapper = config.CreateMapper();
+
+
+
+           
+            var data = _auction.GetAuction().ToList().Select(auction => mapper.Map<Auction, AuctionResponseDTO>(auction));
+            return Ok(data);
 ;        }
 
         // GET: api/Auctions/5
@@ -53,16 +69,41 @@ namespace GroupProject.Controllers.AuctionController
         // PUT: api/Auctions/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAuction(int id, Auction auction)
+        public async Task<IActionResult> PutAuction(int id, [FromForm] AuctionUpdateDTO autionUpdateDTO)
         {
-            if (_auction.GetAuction()==null)
-            {
-                return BadRequest();
-            }
-        
-
             try
             {
+
+                var auction = _auction.GetAuctionById(id);
+
+                if (autionUpdateDTO.DateStart != null)
+                {
+                    auction.DateStart = autionUpdateDTO.DateStart;
+                }
+                if (autionUpdateDTO.DateEnd != null)
+                {
+                    auction.DateEnd = autionUpdateDTO.DateEnd;
+                }
+                if (autionUpdateDTO.AuctionType != null)
+                {
+                    auction.AuctionType = autionUpdateDTO.AuctionType;
+                }
+                if (autionUpdateDTO.DepositeAmount != null)
+                {
+                    auction.DepositeAmount = autionUpdateDTO.DepositeAmount;
+                }
+                if (autionUpdateDTO.FeeAmount != null)
+                {
+                    auction.FeeAmount = autionUpdateDTO.FeeAmount;
+                }
+                if (autionUpdateDTO.BidID != null)
+                {
+                    auction.BidID = autionUpdateDTO.BidID;
+                }
+                if (autionUpdateDTO.RealEstateID != null)
+                {
+                    auction.RealEstateID = autionUpdateDTO.RealEstateID;
+                }
                 _auction.UpdateAuction(auction);
             }
             catch (DbUpdateConcurrencyException)
@@ -77,21 +118,22 @@ namespace GroupProject.Controllers.AuctionController
                 }
             }
 
-            return NoContent();
+            return Ok("Update Successfully");
         }
 
         // POST: api/Auctions
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Auction>> PostAuction(Auction auction)
+        public ActionResult<Auction> PostAuction(AuctionCreateDTO auctioncreateDTO)
         {
-          if (_auction.GetAuction()==null)
-          {
-              return Problem("Entity set 'TheRealEstateDBContext.Auctions'  is null.");
-          }
+            var config = new MapperConfiguration(
+                cfg => cfg.AddProfile(new AuctionProfile())
+            );
+            var mapper = config.CreateMapper();
+            var auction = mapper.Map<Auction>(auctioncreateDTO);
             _auction.AddNewAuction(auction);
-
-            return CreatedAtAction("GetAuction", new { id = auction.AuctionID }, auction);
+           
+            return Ok(auction);
         }
 
         // DELETE: api/Auctions/5
