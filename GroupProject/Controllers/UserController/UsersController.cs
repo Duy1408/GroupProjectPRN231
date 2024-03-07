@@ -57,7 +57,7 @@ namespace GroupProject.Controllers.UserController
         {
             var user = _userServices.GetUserByID(id);
 
-            var responese = _mapper.Map<UserVM>(user);
+            var responese = _mapper.Map<UserDTO>(user);
 
             return Ok(responese);
         }
