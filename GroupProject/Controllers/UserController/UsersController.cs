@@ -42,7 +42,7 @@ namespace GroupProject.Controllers.UserController
                     return NotFound();
                 }
                 var users = _userServices.GetAllUser();
-                var response = _mapper.Map<List<UserVM>>(users);
+                var response = _mapper.Map<List<UserDTO>>(users);
 
                 return Ok(response);
             }
