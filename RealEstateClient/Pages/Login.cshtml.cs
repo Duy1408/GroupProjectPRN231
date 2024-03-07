@@ -59,11 +59,11 @@ namespace RealEstateClient.Pages
 
                         if (roleClaim?.Value == "1") //customer
                         {
-                            return RedirectToPage("./Admin/Index");
+                            return RedirectToPage("./HomePage");
                         }
                         else if (roleClaim?.Value == "Admin") //Admin
                         {
-                            return RedirectToPage("./Error");
+                            return RedirectToPage("./AdminPage/UserPage/Index");
                         }
                     }
                 }
