@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using BusinessObject.BusinessObject;
 using System.Net.Http.Headers;
 using System.Text.Json;
+using BusinessObject.DTO;
 
 namespace RealEstateClient.Pages.AdminPage.UserPage
 {
@@ -34,14 +35,14 @@ namespace RealEstateClient.Pages.AdminPage.UserPage
             {
                 PropertyNameCaseInsensitive = true
             };
-            var _customer = JsonSerializer.Deserialize<User>(strData, options)!;
+            var _user = JsonSerializer.Deserialize<UserDTO>(strData, options)!;
 
-            User = _customer;
+            User = _user;
             return Page();
         }
 
         [BindProperty]
-        public User User { get; set; } = default!;
+        public UserDTO User { get; set; } = default!;
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
