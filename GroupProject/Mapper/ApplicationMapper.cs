@@ -10,12 +10,10 @@ namespace GroupProject.Mapper
     {
         public ApplicationMapper()
         {
-            CreateMap<User, UserVM>().ReverseMap()
-                .ForMember(
-                dest => dest.UserID,
-                opt => opt.MapFrom(src => new Random().Next())
-            );
+            CreateMap<User, UserVM>().ReverseMap();
             CreateMap<User, UserDTO>().ReverseMap();
+
+
         }
     }
 }
