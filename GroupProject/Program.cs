@@ -62,6 +62,9 @@ builder.Services.AddTransient<IRealEstateService, RealEstateService>();
 
 builder.Services.AddScoped<IUserRepo, UserRepo>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IBidRepo, BidRepo>();
+builder.Services.AddScoped<IBidService, BidService>();
+
 
 
 builder.Services.AddAutoMapper(typeof(ApplicationMapper));
