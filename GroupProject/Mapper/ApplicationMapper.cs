@@ -10,8 +10,11 @@ namespace GroupProject.Mapper
     {
         public ApplicationMapper()
         {
-            CreateMap<User, UserVM>().ReverseMap();
-            CreateMap<User, UserDTO>().ReverseMap();
+            CreateMap<UserVM, User>().ReverseMap();
+            CreateMap<UserDTO, User>().ReverseMap();
+
+            CreateMap<BidVM, Bid>().ReverseMap();
+            CreateMap<BidDTO, Bid>().ReverseMap();
 
 
         }
