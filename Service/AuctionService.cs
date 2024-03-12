@@ -24,7 +24,7 @@ namespace Service
 
         public void DeleteAuction(Auction auction)
         {
-            _repo.UpdateAuction(auction);
+            _repo.DeleteAuction(auction);
         }
 
         public List<Auction> GetAuction()
@@ -34,7 +34,7 @@ namespace Service
 
         public Auction GetAuctionById(int id)
         {
-            return GetAuctionById(id);
+            return _repo.GetAuctionById(id);
         }
 
         public void UpdateAuction(Auction auction)

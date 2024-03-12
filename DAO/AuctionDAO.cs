@@ -59,7 +59,7 @@ namespace DAO
             }
             else
             {
-                _context.Entry(a).CurrentValues.SetValues(auction);
+                _context.Entry(a).State = EntityState.Modified;
                 _context.SaveChanges();
                 return true;
             }

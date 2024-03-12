@@ -12,6 +12,7 @@ using BusinessObject.DTO.Response;
 using GroupProject.Mapper;
 using BusinessObject.DTO.Request;
 using DAO;
+using System.Xml.Linq;
 
 namespace GroupProject.Controllers.AuctionController
 {
@@ -78,37 +79,37 @@ namespace GroupProject.Controllers.AuctionController
 
                 if (autionUpdateDTO.DateStart != null)
                 {
-                    auction.DateStart = autionUpdateDTO.DateStart;
+                    auction.DateStart = (DateTime)autionUpdateDTO.DateStart;
                 }
                 if (autionUpdateDTO.DateEnd != null)
                 {
-                    auction.DateEnd = autionUpdateDTO.DateEnd;
+                    auction.DateEnd = (DateTime)autionUpdateDTO.DateEnd;
                 }
                 if (autionUpdateDTO.AuctionType != null)
                 {
-                    auction.AuctionType = autionUpdateDTO.AuctionType;
+                    auction.AuctionType = (bool)autionUpdateDTO.AuctionType;
                 }
                 if (autionUpdateDTO.DepositeAmount != null)
                 {
-                    auction.DepositeAmount = autionUpdateDTO.DepositeAmount;
+                    auction.DepositeAmount = (double)autionUpdateDTO.DepositeAmount;
                 }
                 if (autionUpdateDTO.FeeAmount != null)
                 {
-                    auction.FeeAmount = autionUpdateDTO.FeeAmount;
+                    auction.FeeAmount = (double)autionUpdateDTO.FeeAmount;
                 }
                 if (autionUpdateDTO.BidID != null)
                 {
-                    auction.BidID = autionUpdateDTO.BidID;
+                    auction.BidID = (int)autionUpdateDTO.BidID;
                 }
                 if (autionUpdateDTO.RealEstateID != null)
                 {
-                    auction.RealEstateID = autionUpdateDTO.RealEstateID;
+                    auction.RealEstateID = (int)autionUpdateDTO.RealEstateID;
                 }
                 _auction.UpdateAuction(auction);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (_auction.GetAuctionById(id)==null)
+                if (_auction.GetAuctionById(id) == null)
                 {
                     return NotFound();
                 }
@@ -120,6 +121,7 @@ namespace GroupProject.Controllers.AuctionController
 
             return Ok("Update Successfully");
         }
+
 
         // POST: api/Auctions
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
