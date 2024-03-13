@@ -51,18 +51,20 @@ namespace DAO
         public bool UpdateAuction(Auction auction)
         {
             var _context = new TheRealEstateDBContext();
-            var a = _context.Auctions.SingleOrDefault(c => c.AuctionID == auction.AuctionID);
+            //var a = _context.Auctions.SingleOrDefault(c => c.AuctionID == auction.AuctionID);
 
-            if (a == null)
-            {
-                return false;
-            }
-            else
-            {
-                _context.Entry(a).State = EntityState.Modified;
-                _context.SaveChanges();
+            //if (a == null)
+            //{
+            //    return false;
+            //}
+            //else
+            //{
+            _context.Entry(auction).State = EntityState.Modified;
+            //_context.Update(a);
+            //_context.Entry(auction).CurrentValues.SetValues(auction);
+            _context.SaveChanges();
                 return true;
-            }
+            //}
         }
 
         public Auction GetAuctionByID(int id)

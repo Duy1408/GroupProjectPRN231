@@ -2,6 +2,7 @@
 using BusinessObject.BusinessObject;
 using BusinessObject.DTO.Request;
 using BusinessObject.DTO.Response;
+using Microsoft.EntityFrameworkCore;
 
 namespace GroupProject.Mapper
 {
@@ -9,7 +10,7 @@ namespace GroupProject.Mapper
     {
         public AuctionProfile()
         {
-            CreateMap< Auction, AuctionCreateDTO>()
+            CreateMap< AuctionCreateDTO, Auction> ()
 
             .ForMember(
                 dest => dest.DateStart,
@@ -60,6 +61,10 @@ namespace GroupProject.Mapper
             .ForMember(
                 dest => dest.FeeAmount,
                 opt => opt.MapFrom(src => src.FeeAmount)
+            )
+               .ForMember(
+                dest => dest.Status,
+                opt => opt.MapFrom(src => src.Status)
             )
             .ForMember(
                 dest => dest.BidID,

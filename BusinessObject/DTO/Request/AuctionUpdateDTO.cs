@@ -24,6 +24,7 @@ namespace BusinessObject.DTO.Request
         //[Range(0, double.MaxValue, ErrorMessage = "FeeAmount must be greater than or equal to 0.")]
         public double? FeeAmount { get; set; }
         //[Required(ErrorMessage = "Bid is required.")]
+       public bool? Status { get; set; }
         public int? BidID { get; set; }
         //[Required(ErrorMessage = "RealEstate is required.")]
         public int? RealEstateID { get; set; }

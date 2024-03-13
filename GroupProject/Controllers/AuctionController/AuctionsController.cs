@@ -97,6 +97,11 @@ namespace GroupProject.Controllers.AuctionController
                 {
                     auction.FeeAmount = (double)autionUpdateDTO.FeeAmount;
                 }
+                if (autionUpdateDTO.Status!= null)
+                {
+                    auction.Status = (bool)autionUpdateDTO.Status;
+
+                }
                 if (autionUpdateDTO.BidID != null)
                 {
                     auction.BidID = (int)autionUpdateDTO.BidID;
@@ -126,7 +131,7 @@ namespace GroupProject.Controllers.AuctionController
         // POST: api/Auctions
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public ActionResult<Auction> PostAuction(AuctionCreateDTO auctioncreateDTO)
+        public ActionResult<Auction> PostAuction(  AuctionCreateDTO auctioncreateDTO)
         {
             var config = new MapperConfiguration(
                 cfg => cfg.AddProfile(new AuctionProfile())
