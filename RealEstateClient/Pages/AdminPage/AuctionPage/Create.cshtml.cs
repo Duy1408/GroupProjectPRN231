@@ -9,58 +9,38 @@ using BusinessObject.BusinessObject;
 using System.Net.Http.Headers;
 using System.Text.Json;
 
-namespace RealEstateClient.Pages.AdminPage.UserPage
+namespace RealEstateClient.Pages.AdminPage.AuctionPage
 {
     public class CreateModel : PageModel
     {
-        private readonly HttpClient client;
+        private readonly HttpClient client = null!;
         private string ApiUrl = "";
-
 
         public CreateModel()
         {
             client = new HttpClient();
             var contentType = new MediaTypeWithQualityHeaderValue("application/json");
             client.DefaultRequestHeaders.Accept.Add(contentType);
-            ApiUrl = "https://localhost:7088/api/Users";
+            ApiUrl = "https://localhost:7088/api/Auctions";
 
         }
 
-
         [BindProperty]
-        public User User { get; set; } = default!;
-
-        public string Admin { get; private set; } = default!;
+        public Auction Auction { get; set; } = default!;
 
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-            //try
-            //{
-            //    Admin = HttpContext.Session.GetString("Admin")!;
-            //    if (Admin != "Admin")
-            //    {
-            //        return NotFound();
-            //    }
-            //    if (Admin == null)
-            //    {
-            //        return NotFound();
-            //    }
-            //}
-            //catch
-            //{
-            //    NotFound();
-            //}
             try
             {
 
-                string strData = JsonSerializer.Serialize(User);
+                string strData = JsonSerializer.Serialize(Auction);
                 var contentData = new StringContent(strData, System.Text.Encoding.UTF8, "application/json");
                 HttpResponseMessage response = await client.PostAsync(ApiUrl, contentData);
                 if (response.IsSuccessStatusCode)
                 {
-                    ViewData["Message"] = "Add New User successfully";
+                    ViewData["Message"] = "Add New Auctions successfully";
                     return RedirectToPage("./Index");
                 }
             }

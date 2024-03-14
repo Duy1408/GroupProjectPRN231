@@ -9,43 +9,36 @@ using BusinessObject.BusinessObject;
 using System.Net.Http.Headers;
 using System.Text.Json;
 
-namespace RealEstateClient.Pages.AdminPage.RealEstatepage
+namespace RealEstateClient.Pages.AdminPage.AuctionPage
 {
-    public class DetailsModel : PageModel
+    public class IndexModel : PageModel
     {
         private readonly HttpClient client = null!;
         private string ApiUrl = "";
 
-        public DetailsModel()
+        public IndexModel()
         {
             client = new HttpClient();
             var contentType = new MediaTypeWithQualityHeaderValue("application/json");
             client.DefaultRequestHeaders.Accept.Add(contentType);
-            ApiUrl = "https://localhost:7088/api/RealEstates";
+            ApiUrl = "https://localhost:7088/api/Auctions";
 
         }
-        public RealEstate RealEstate { get; set; } = default!;
+        public IList<Auction> Auction { get;set; } = default!;
 
-        public string Admin { get; private set; } = default!;
-
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync()
         {
-            HttpResponseMessage response = await client.GetAsync($"{ApiUrl}/{id}");
+            
+            HttpResponseMessage response = await client.GetAsync(ApiUrl);
             string strData = await response.Content.ReadAsStringAsync();
 
             var options = new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             };
-            var _realEstate = JsonSerializer.Deserialize<RealEstate>(strData, options)!;
+            List<Auction> auctions = JsonSerializer.Deserialize<List<Auction>>(strData, options)!;
 
-            var realEstate = _realEstate;
-
-            if (realEstate == null)
-            {
-                return NotFound();
-            }
-            RealEstate = realEstate;
+            Auction = auctions;
 
             return Page();
         }

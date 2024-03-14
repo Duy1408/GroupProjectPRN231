@@ -34,13 +34,14 @@
                 <span asp-validation-for="User.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="User.RoleID" class="control-label"></label>
+                <input asp-for="User.RoleID" class="form-control" />
+                <span asp-validation-for="User.RoleID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="User.PhoneNumber" class="control-label"></label>
                 <input asp-for="User.PhoneNumber" class="form-control" />
                 <span asp-validation-for="User.PhoneNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="User.RoleID" class="control-label"></label>
-                <select asp-for="User.RoleID" class ="form-control" asp-items="ViewBag.RoleID"></select>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
@@ -49,7 +50,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="User.BidID" class="control-label"></label>
-                <select asp-for="User.BidID" class ="form-control" asp-items="ViewBag.BidID"></select>
+                <input asp-for="User.BidID" class="form-control" />
+                <span asp-validation-for="User.BidID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

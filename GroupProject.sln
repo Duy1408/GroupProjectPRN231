@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service", "Service\Service.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GroupProject", "GroupProject\GroupProject.csproj", "{EF939913-4495-4724-8945-546227B45A2B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealEstateClient", "RealEstateClient\RealEstateClient.csproj", "{FF670298-E037-4864-82F8-252CA047D04A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealEstateClient", "RealEstateClient\RealEstateClient.csproj", "{FF670298-E037-4864-82F8-252CA047D04A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

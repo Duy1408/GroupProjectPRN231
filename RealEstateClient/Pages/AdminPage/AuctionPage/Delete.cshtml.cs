@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BusinessObject.BusinessObject;
 
-namespace RealEstateClient.Pages.AdminPage.RealEstatepage
+namespace RealEstateClient.Pages.AdminPage.AuctionPage
 {
     public class DeleteModel : PageModel
     {
@@ -19,40 +19,40 @@ namespace RealEstateClient.Pages.AdminPage.RealEstatepage
         }
 
         [BindProperty]
-      public RealEstate RealEstate { get; set; } = default!;
+      public Auction Auction { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.RealEstates == null)
+            if (id == null || _context.Auctions == null)
             {
                 return NotFound();
             }
 
-            var realestate = await _context.RealEstates.FirstOrDefaultAsync(m => m.RealEstateID == id);
+            var auction = await _context.Auctions.FirstOrDefaultAsync(m => m.AuctionID == id);
 
-            if (realestate == null)
+            if (auction == null)
             {
                 return NotFound();
             }
             else 
             {
-                RealEstate = realestate;
+                Auction = auction;
             }
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null || _context.RealEstates == null)
+            if (id == null || _context.Auctions == null)
             {
                 return NotFound();
             }
-            var realestate = await _context.RealEstates.FindAsync(id);
+            var auction = await _context.Auctions.FindAsync(id);
 
-            if (realestate != null)
+            if (auction != null)
             {
-                RealEstate = realestate;
-                _context.RealEstates.Remove(RealEstate);
+                Auction = auction;
+                _context.Auctions.Remove(Auction);
                 await _context.SaveChangesAsync();
             }
 

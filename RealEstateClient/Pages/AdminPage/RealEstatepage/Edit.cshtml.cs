@@ -7,71 +7,67 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BusinessObject.BusinessObject;
+using BusinessObject.DTO.Request;
+using System.Net.Http.Headers;
+using System.Text.Json;
+using BusinessObject.DTO.Response;
 
 namespace RealEstateClient.Pages.AdminPage.RealEstatepage
 {
     public class EditModel : PageModel
     {
-        private readonly BusinessObject.BusinessObject.TheRealEstateDBContext _context;
+        private readonly HttpClient _httpClient;
+        private string ApiUrl = "";
 
-        public EditModel(BusinessObject.BusinessObject.TheRealEstateDBContext context)
+        public EditModel()
         {
-            _context = context;
+            _httpClient = new HttpClient();
+            var contentType = new MediaTypeWithQualityHeaderValue("application/json");
+            _httpClient.DefaultRequestHeaders.Accept.Add(contentType);
+            ApiUrl = "https://localhost:7088/api/RealEstates";
         }
-
-        [BindProperty]
-        public RealEstate RealEstate { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.RealEstates == null)
-            {
-                return NotFound();
-            }
+            HttpResponseMessage responseMessage = await _httpClient.GetAsync($"{ApiUrl}/{id}");
+            string strData = await responseMessage.Content.ReadAsStringAsync();
 
-            var realestate =  await _context.RealEstates.FirstOrDefaultAsync(m => m.RealEstateID == id);
-            if (realestate == null)
+            var options = new JsonSerializerOptions
             {
-                return NotFound();
-            }
-            RealEstate = realestate;
-           ViewData["UserID"] = new SelectList(_context.Users, "UserID", "Email");
+                PropertyNameCaseInsensitive = true
+            };
+            var _realEstate = JsonSerializer.Deserialize<RealEstateResponseDTO>(strData, options)!;
+
+
+            RealEstate = _realEstate;
             return Page();
         }
 
+        [BindProperty]
+        public RealEstateResponseDTO RealEstate { get; set; } = default!;
+
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
-            _context.Attach(RealEstate).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                string strData = JsonSerializer.Serialize(RealEstate); 
+                var contentData = new StringContent(strData, System.Text.Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await _httpClient.PutAsync($"{ApiUrl}?id={id}", contentData);
+                if (response.IsSuccessStatusCode)
+                {
+                    ViewData["Success"] = "Update Success";
+                    return RedirectToPage("./Index");
+                }
+                ViewData["Error"] = "Update Error";
+                return RedirectToPage("./Index");
             }
-            catch (DbUpdateConcurrencyException)
+            catch
             {
-                if (!RealEstateExists(RealEstate.RealEstateID))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                ViewData["Error"] = "Fail To Call API";
+                return RedirectToPage("/Error");
             }
-
-            return RedirectToPage("./Index");
-        }
-
-        private bool RealEstateExists(int id)
-        {
-          return (_context.RealEstates?.Any(e => e.RealEstateID == id)).GetValueOrDefault();
         }
     }
 }
