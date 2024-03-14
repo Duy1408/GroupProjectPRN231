@@ -55,6 +55,7 @@ builder.Services.AddMvc()
 
 builder.Services.AddTransient<IRealEstateRepo, RealEstateRepo>();
 builder.Services.AddTransient<IRealEstateService, RealEstateService>();
+
 builder.Services.AddTransient<IAuctionRepo, AuctionRepo>();
 builder.Services.AddTransient<IAuctionService, AuctionService>();
 
@@ -64,6 +65,9 @@ builder.Services.AddScoped<IUserRepo, UserRepo>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IBidRepo, BidRepo>();
 builder.Services.AddScoped<IBidService, BidService>();
+builder.Services.AddScoped<ICommentRepo, CommentRepo>();
+builder.Services.AddScoped<ICommentService, CommentService>();
+
 
 
 
