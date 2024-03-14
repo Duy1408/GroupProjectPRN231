@@ -1,4 +1,5 @@
 ﻿using BusinessObject.BusinessObject;
+using Repo.Interface;
 using Service.Interface;
 using System;
 using System.Collections.Generic;
@@ -10,8 +11,8 @@ namespace Service
 {
     public class CommentService : ICommentService
     {
-        private ICommentService _service;
-        public CommentService(ICommentService service)
+        private readonly ICommentRepo _service;
+        public CommentService(ICommentRepo service)
         {
             _service = service;
         }
@@ -36,9 +37,11 @@ namespace Service
             return _service.GetCommentById(id);
         }
 
-        public void UpdateComment(Comment comment)
-        {
-           _service.UpdateComment(comment);
+        public void UpdateComment(Comment comment) {
+
+            _service.UpdateComment(comment);
         }
+         
+        
     }
 }
