@@ -8,6 +8,7 @@ namespace BusinessObject.DTO.Response
 {
     public class RealEstateResponseDTO
     {
+
         public int RealEstateID { get; set; }
         public string? RealEstateName { get; set; }
 
@@ -16,5 +17,7 @@ namespace BusinessObject.DTO.Response
         public double Estimation { get; set; }
         public string Description { get; set; }
         public bool Status { get; set; }
+
+        public int UserID { get; set; }
     }
 }
