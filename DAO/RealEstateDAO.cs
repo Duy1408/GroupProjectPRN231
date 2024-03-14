@@ -48,20 +48,18 @@ namespace DAO
             }
         }
 
-        public bool UpdateRealEstate(RealEstate realestate)
+        public void UpdateRealEstate(RealEstate realestate)
         {
             var _context = new TheRealEstateDBContext();
-            var a = _context.RealEstates.SingleOrDefault(c => c.RealEstateID == realestate.RealEstateID);
-
-            if (a == null)
+            try
             {
-                return false;
-            }
-            else
-            {
-                _context.Entry(a).CurrentValues.SetValues(realestate);
+                _context.Attach(realestate).State = EntityState.Modified;
                 _context.SaveChanges();
-                return true;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 
@@ -75,11 +73,11 @@ namespace DAO
         {
             var _context = new TheRealEstateDBContext();
 
-            var estate = _context.RealEstates.FirstOrDefault(a => a.RealEstateID== realestate.RealEstateID);
+            var estate = _context.RealEstates.FirstOrDefault(a => a.RealEstateID == realestate.RealEstateID);
             if (estate != null)
             {
                 var p = _context.Properties.Where(a => a.RealEstateID == estate.RealEstateID);
-                if (p.Count() <1)
+                if (p.Count() < 1)
                 {
                     estate.Status = false;
                     //_context.Entry(estate).CurrentValues.SetValues(realestate);
@@ -91,7 +89,7 @@ namespace DAO
                 }
 
             }
-            
+
             _context.SaveChanges();
         }
 

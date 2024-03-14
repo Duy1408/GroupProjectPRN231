@@ -36,7 +36,7 @@ namespace RealEstateClient.Pages.AdminPage.RealEstatepage
             {
                 PropertyNameCaseInsensitive = true
             };
-            var _realEstate = JsonSerializer.Deserialize<RealEstateResponseDTO>(strData, options)!;
+            var _realEstate = JsonSerializer.Deserialize<RealEstateUpdateDTO>(strData, options)!;
 
 
             RealEstate = _realEstate;
@@ -44,7 +44,7 @@ namespace RealEstateClient.Pages.AdminPage.RealEstatepage
         }
 
         [BindProperty]
-        public RealEstateResponseDTO RealEstate { get; set; } = default!;
+        public RealEstateUpdateDTO RealEstate { get; set; } = default!;
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
@@ -52,7 +52,7 @@ namespace RealEstateClient.Pages.AdminPage.RealEstatepage
         {
             try
             {
-                string strData = JsonSerializer.Serialize(RealEstate); 
+                string strData = JsonSerializer.Serialize(RealEstate);
                 var contentData = new StringContent(strData, System.Text.Encoding.UTF8, "application/json");
                 HttpResponseMessage response = await _httpClient.PutAsync($"{ApiUrl}?id={id}", contentData);
                 if (response.IsSuccessStatusCode)

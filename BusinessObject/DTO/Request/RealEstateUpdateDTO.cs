@@ -10,14 +10,19 @@ namespace BusinessObject.DTO.Request
 {
     public class RealEstateUpdateDTO
     {
+        public int RealEstateID { get; set; }
+        [Required(ErrorMessage = "RealEstateName is required.")]
+        public string RealEstateName { get; set; }
+        [Required(ErrorMessage = "Estimation is required.")]
+        public string RealEstateAddress { get; set; }
         [Required(ErrorMessage = "Estimation is required.")]
         [Range(0, double.MaxValue, ErrorMessage = "Estimation must be greater than or equal to 0.")]
-        public double? Estimation { get; set; }
+        public double Estimation { get; set; }
         [Required(ErrorMessage = "Description is required.")]
-        public string? Description { get; set; }
+        public string Description { get; set; }
         [Required(ErrorMessage = "Status is required.")]
-        public bool? Status { get; set; }
+        public bool Status { get; set; }
         [Required(ErrorMessage = "User is required.")]
-        public int? UserID { get; set; }
+        public int UserID { get; set; }
     }
 }
