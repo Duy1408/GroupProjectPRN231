@@ -16,6 +16,7 @@ namespace BusinessObject.BusinessObject
         public double Estimation {  get; set; }
         public string Description { get; set; }
         public bool Status { get; set; }
+        public string Image { get; set; }
         public List<Auction> Autions { get; set; }
         public List<Comment> Comments { get; set; }
         public int UserID { get; set; }
