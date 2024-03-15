@@ -29,6 +29,9 @@
                 @Html.DisplayNameFor(model => model.RealEstate[0].Status)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.RealEstate[0].Image)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.RealEstate[0].User)
             </th>
             <th></th>
@@ -52,6 +55,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Image)
+                </td>
             <td>
                 @Html.DisplayFor(modelItem => item.User.Email)
             </td>
