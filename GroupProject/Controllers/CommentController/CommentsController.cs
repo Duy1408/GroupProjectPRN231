@@ -12,6 +12,7 @@ using BusinessObject.DTO;
 using Service;
 using BusinessObject.ViewModels;
 
+
 namespace GroupProject.Controllers.CommentController
 {
     [Route("api/[controller]")]
@@ -25,6 +26,7 @@ namespace GroupProject.Controllers.CommentController
             _comment = comment;
             _mapper = mapper;
         }
+
 
         // GET: api/Comments
         [HttpGet]
@@ -53,7 +55,9 @@ namespace GroupProject.Controllers.CommentController
         {
             var comment = _comment.GetCommentByID(id);
 
+
             var responese = _mapper.Map<CommentDTO>(comment);
+
 
             return Ok(responese);
         }
@@ -65,6 +69,7 @@ namespace GroupProject.Controllers.CommentController
             {
                 var comments = _mapper.Map<Comment>(comment);
                 _comment.AddNewComment(comments);
+                
 
                 return Ok("Create successful");
             }

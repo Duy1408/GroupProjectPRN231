@@ -20,6 +20,7 @@ namespace BusinessObject.FluentAPI
             builder.Property(x => x .Estimation);
             builder.Property(x => x.Description);
             builder.Property(x => x.Status);
+            builder.Property(x => x.Image);
             builder.HasMany(x => x.Autions).WithOne(x => x.RealEstate).OnDelete(DeleteBehavior.NoAction);
             builder.HasMany(x => x.Comments).WithOne(x => x.RealEstate).OnDelete(DeleteBehavior.NoAction);
             builder.HasMany(x => x.Properties).WithOne(x => x.RealEstate).OnDelete(DeleteBehavior.NoAction);
