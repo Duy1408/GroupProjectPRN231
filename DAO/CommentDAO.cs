@@ -10,74 +10,70 @@ namespace DAO
 {
     public class CommentDAO
     {
-        private static CommentDAO instance;
-
-        public static CommentDAO Instance
+        private readonly TheRealEstateDBContext _context;
+        public CommentDAO()
         {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new CommentDAO();
-                }
-                return instance;
-            }
+            _context = new TheRealEstateDBContext();
         }
 
         public List<Comment> GetAllComment()
         {
-            var _context = new TheRealEstateDBContext();
-            return _context.Comments.ToList();
-
-        }
-
-
-        public bool AddNewComment(Comment comment)
-        {
-            var _context = new TheRealEstateDBContext();
-            var a = _context.Comments.SingleOrDefault(c => c.CommentID == comment.CommentID);
-
-            if (a != null)
+            try
             {
-                return false;
+                return _context.Comments.Include(a => a.RealEstate)
+                                     .Include(a => a.User).ToList();
             }
-            else
+            catch (Exception ex)
             {
-                _context.Comments.Add(comment);
-                _context.SaveChanges();
-                return true;
-
+                throw new Exception(ex.Message);
             }
         }
 
 
-        public bool UpdateComment(Comment comment)
+        public void AddNewComment(Comment comment)
         {
-            var _context = new TheRealEstateDBContext();
-            var a = _context.Comments.SingleOrDefault(c => c.CommentID == comment.CommentID);
-
-            if (a == null)
+            try
             {
-                return false;
-            }
-            else
-            {
-                _context.Entry(a).CurrentValues.SetValues(comment);
+                _context.Add(comment);
                 _context.SaveChanges();
-                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+        }
+
+
+        public void UpdateComment(Comment comment)
+        {
+            try
+            {
+                _context.Attach(comment).State = EntityState.Modified;
+                _context.SaveChanges();
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 
         public Comment GetCommentByID(int id)
         {
-            var _context = new TheRealEstateDBContext();
-            return _context.Comments.SingleOrDefault(a => a.CommentID == id);
+            try
+            {
+                var comment = _context.Comments.SingleOrDefault(c => c.CommentID == id);
+                return comment;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public void DeleteComment(Comment comment)
         {
-            var _context = new TheRealEstateDBContext();
-
             var a = _context.Comments.FirstOrDefault(a => a.CommentID == comment.CommentID);
             _context.Comments.Remove(a);
 

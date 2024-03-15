@@ -16,30 +16,16 @@ namespace Repo
         {
             dao = new CommentDAO();
         }
-        public void AddNewComment(Comment comment)
-        {
-            dao.AddNewComment(comment);
-        }
 
-        public void DeleteComment(Comment comment)
-        {
-           dao.DeleteComment(comment);
-        }
+        public void AddNewComment(Comment comment) => dao.AddNewComment(comment);
 
-        public List<Comment> GetComment()
-        {
-            return dao.GetAllComment();
-        }
+        public void DeleteComment(Comment comment) => dao.DeleteComment(comment);
 
-        public Comment GetCommentById(int id)
-        {
-            return dao.GetCommentByID(id);
+        public List<Comment> GetAllComment() => dao.GetAllComment();
 
-        }
+        public Comment GetCommentByID(int id) => dao.GetCommentByID(id);
 
-        public void UpdateComment(Comment comment)
-        {
-            dao.UpdateComment(comment);
-        }
+        public void UpdateComment(Comment comment) => dao.UpdateComment(comment);
+
     }
 }
