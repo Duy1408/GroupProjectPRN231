@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BusinessObject.BusinessObject;
 using BusinessObject.DTO;
+using BusinessObject.DTO.Request;
 using BusinessObject.ViewModels;
 using System.Security.Principal;
 
@@ -16,6 +17,10 @@ namespace GroupProject.Mapper
             CreateMap<BidVM, Bid>().ReverseMap();
             CreateMap<BidDTO, Bid>().ReverseMap();
 
+
+            CreateMap<RealEstateUpdateDTO, RealEstate>().ReverseMap();
+
+            CreateMap<AuctionUpdateDTO, Auction>().ReverseMap();
 
         }
     }

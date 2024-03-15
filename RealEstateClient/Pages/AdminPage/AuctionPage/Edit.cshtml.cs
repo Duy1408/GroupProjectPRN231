@@ -7,72 +7,68 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BusinessObject.BusinessObject;
+using System.Net.Http.Headers;
+using BusinessObject.DTO.Request;
+using System.Text.Json;
 
 namespace RealEstateClient.Pages.AdminPage.AuctionPage
 {
     public class EditModel : PageModel
     {
-        private readonly BusinessObject.BusinessObject.TheRealEstateDBContext _context;
+        private readonly HttpClient _httpClient;
+        private string ApiUrl = "";
 
-        public EditModel(BusinessObject.BusinessObject.TheRealEstateDBContext context)
+
+        public EditModel()
         {
-            _context = context;
+            _httpClient = new HttpClient();
+            var contentType = new MediaTypeWithQualityHeaderValue("application/json");
+            _httpClient.DefaultRequestHeaders.Accept.Add(contentType);
+            ApiUrl = "https://localhost:7088/api/Auctions";
         }
 
         [BindProperty]
-        public Auction Auction { get; set; } = default!;
+        public AuctionUpdateDTO Auction { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Auctions == null)
-            {
-                return NotFound();
-            }
+            HttpResponseMessage responseMessage = await _httpClient.GetAsync($"{ApiUrl}/{id}");
+            string strData = await responseMessage.Content.ReadAsStringAsync();
 
-            var auction =  await _context.Auctions.FirstOrDefaultAsync(m => m.AuctionID == id);
-            if (auction == null)
+            var options = new JsonSerializerOptions
             {
-                return NotFound();
-            }
-            Auction = auction;
-           ViewData["BidID"] = new SelectList(_context.Bids, "BidID", "BidID");
-           ViewData["RealEstateID"] = new SelectList(_context.RealEstates, "RealEstateID", "Description");
+                PropertyNameCaseInsensitive = true
+            };
+            var _auction = JsonSerializer.Deserialize<AuctionUpdateDTO>(strData, options)!;
+
+
+            Auction = _auction;
             return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
-            _context.Attach(Auction).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                string strData = JsonSerializer.Serialize(Auction);
+                var contentData = new StringContent(strData, System.Text.Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await _httpClient.PutAsync($"{ApiUrl}?id={id}", contentData);
+                if (response.IsSuccessStatusCode)
+                {
+                    ViewData["Success"] = "Update Success";
+                    return RedirectToPage("./Index");
+                }
+                ViewData["Error"] = "Update Error";
+                return RedirectToPage("./Index");
             }
-            catch (DbUpdateConcurrencyException)
+            catch
             {
-                if (!AuctionExists(Auction.AuctionID))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                ViewData["Error"] = "Fail To Call API";
+                return RedirectToPage("/Error");
             }
-
-            return RedirectToPage("./Index");
         }
 
-        private bool AuctionExists(int id)
-        {
-          return (_context.Auctions?.Any(e => e.AuctionID == id)).GetValueOrDefault();
-        }
     }
 }

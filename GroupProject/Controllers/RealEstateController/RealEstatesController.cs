@@ -11,6 +11,7 @@ using AutoMapper;
 using GroupProject.Mapper;
 using BusinessObject.DTO.Response;
 using BusinessObject.DTO.Request;
+using Service;
 
 namespace GroupProject.Controllers.RealEstateController
 {
@@ -19,32 +20,34 @@ namespace GroupProject.Controllers.RealEstateController
     public class RealEstatesController : ControllerBase
     {
         private IRealEstateService _service;
+        private readonly IMapper _mapper;
 
-        public RealEstatesController(IRealEstateService service)
+        public RealEstatesController(IRealEstateService service, IMapper mapper)
         {
             _service = service;
+            _mapper = mapper;
         }
 
         // GET: api/RealEstates
         [HttpGet]
         public ActionResult<IEnumerable<RealEstate>> GetRealEstates()
         {
-          if (_service.GetRealEstates() == null)
-          {
-              return NotFound();
-          }
+            if (_service.GetRealEstates() == null)
+            {
+                return NotFound();
+            }
 
-        
+
             var config = new MapperConfiguration(
                 cfg => cfg.AddProfile(new RealEstateProfile())
             );
             // create mapper
             var mapper = config.CreateMapper();
 
-            
+
 
             var data = _service.GetRealEstates().ToList().Select(estate => mapper.Map<RealEstate, RealEstateResponseDTO>(estate));
-                
+
             return Ok(data);
         }
 
@@ -52,10 +55,10 @@ namespace GroupProject.Controllers.RealEstateController
         [HttpGet("{id}")]
         public ActionResult<RealEstate> GetRealEstate(int id)
         {
-          if (_service.GetRealEstates() == null)
-          {
-              return NotFound();
-          }
+            if (_service.GetRealEstates() == null)
+            {
+                return NotFound();
+            }
             var realEstate = _service.GetRealEstateById(id);
 
             if (realEstate == null)
@@ -66,49 +69,28 @@ namespace GroupProject.Controllers.RealEstateController
             return realEstate;
         }
 
-    
+
 
         // PUT: api/RealEstates/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public IActionResult UpdateRealEstate(int id, [FromForm] RealEstateUpdateDTO estateUpdateDTO)
+        [HttpPut]
+        public IActionResult UpdateRealEstate(int id, RealEstateUpdateDTO estateUpdateDTO)
         {
-           try
+            try
             {
-
-                var estate = _service.GetRealEstateById(id);
-
-                if (estateUpdateDTO.Estimation != null)
-                {
-                    estate.Estimation = (double)estateUpdateDTO.Estimation;
-                }
-                if (estateUpdateDTO.Description != null)
-                {
-                    estate.Description = estateUpdateDTO.Description;
-                }
-                if (estateUpdateDTO.UserID!= null)
-                {
-                    estate.UserID = (int)estateUpdateDTO.UserID;
-                }
-                if (estateUpdateDTO.Status != null)
-                {
-                    estate.Status = (bool)estateUpdateDTO.Status;
-                }
-                _service.UpdateRealEstate(estate);
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (_service.GetRealEstateById(id) == null)
+                if (estateUpdateDTO.RealEstateID != id)
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
-            }
+                var _realestate = _mapper.Map<RealEstate>(estateUpdateDTO);
+                _service.UpdateRealEstate(_realestate);
 
-            return Ok("Update Successfully");
+                return Ok("Update Successfully");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // POST: api/RealEstates
@@ -124,7 +106,7 @@ namespace GroupProject.Controllers.RealEstateController
             _service.AddNewRealEstate(estate);
             return Ok(estate);
         }
-       
+
 
         // DELETE: api/RealEstates/5
         [HttpDelete("{id}")]
@@ -147,10 +129,11 @@ namespace GroupProject.Controllers.RealEstateController
                 return Ok("Delete Successfully!!");
 
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 return BadRequest(ex.Message);
             }
-            
+
         }
 
         // GET: api/Cats/5
