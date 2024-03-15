@@ -9,12 +9,11 @@ namespace Repo.Interface
 {
     public interface ICommentRepo
     {
-        List<Comment> GetComment();
+        List<Comment> GetAllComment();
         void AddNewComment(Comment comment);
-
-        void DeleteComment(Comment comment);
-        Comment GetCommentById(int id);
-
         void UpdateComment(Comment comment);
+        Comment GetCommentByID(int id);
+        void DeleteComment(Comment comment);
+
     }
 }

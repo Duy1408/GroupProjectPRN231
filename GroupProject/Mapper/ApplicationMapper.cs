@@ -22,6 +22,9 @@ namespace GroupProject.Mapper
 
             CreateMap<AuctionUpdateDTO, Auction>().ReverseMap();
 
+            CreateMap<CommentVM, Comment>().ReverseMap();
+            CreateMap<CommentDTO, Comment>().ReverseMap();
+
         }
     }
 }

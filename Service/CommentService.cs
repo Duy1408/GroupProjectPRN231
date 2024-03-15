@@ -17,31 +17,15 @@ namespace Service
             _service = service;
         }
 
-        public void AddNewComment(Comment comment)
-        {
-            _service.AddNewComment(comment);
-        }
+        public void AddNewComment(Comment comment) => _service.AddNewComment(comment);
 
-        public void DeleteComment(Comment comment)
-        {
-            _service.DeleteComment(comment);
-        }
+        public void DeleteComment(Comment comment) => _service.DeleteComment(comment);
 
-        public List<Comment> GetComment()
-        {
-            return _service.GetComment();
-        }
+        public List<Comment> GetAllComment() => _service.GetAllComment();
 
-        public Comment GetCommentById(int id)
-        {
-            return _service.GetCommentById(id);
-        }
+        public Comment GetCommentByID(int id) => _service.GetCommentByID(id);
 
-        public void UpdateComment(Comment comment) {
+        public void UpdateComment(Comment comment) => _service.UpdateComment(comment);
 
-            _service.UpdateComment(comment);
-        }
-         
-        
     }
 }
