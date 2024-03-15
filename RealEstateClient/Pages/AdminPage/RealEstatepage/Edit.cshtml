@@ -48,7 +48,11 @@
                     <input class="form-check-input" asp-for="RealEstate.Status" /> @Html.DisplayNameFor(model => model.RealEstate.Status)
                 </label>
             </div>
-
+            <div class="form-group">
+                <label asp-for="RealEstate.Image" class="control-label"></label>
+                <input asp-for="RealEstate.Image" class="form-control" />
+                <span asp-validation-for="RealEstate.Image" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="RealEstate.UserID" class="control-label"></label>
                 <input asp-for="RealEstate.UserID" class="form-control" />

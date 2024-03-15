@@ -22,6 +22,8 @@ namespace BusinessObject.DTO.Request
         public string Description { get; set; }
         [Required(ErrorMessage = "Status is required.")]
         public bool Status { get; set; }
+        [Required(ErrorMessage = "Image is required.")]
+        public string Image { get; set; }
         [Required(ErrorMessage = "User is required.")]
         public int UserID { get; set; }
     }

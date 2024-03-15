@@ -10,7 +10,7 @@ namespace GroupProject.Mapper
         public RealEstateProfile()
         {
 
-            CreateMap < RealEstateCreateDTO, RealEstate>()
+            CreateMap<RealEstateCreateDTO, RealEstate>()
 
             .ForMember(
                 dest => dest.RealEstateName,
@@ -34,36 +34,44 @@ namespace GroupProject.Mapper
             .ForMember(
                 dest => dest.Status,
                 opt => opt.MapFrom(src => src.Status)
+            )
+            .ForMember(
+                dest => dest.Image,
+                opt => opt.MapFrom(src => src.Image)
             );
 
-           CreateMap<RealEstate, RealEstateResponseDTO>()
-          .ForMember(
-              dest => dest.RealEstateID,
-              opt => opt.MapFrom(src => src.RealEstateID)
-          )
-          .ForMember(
-              dest => dest.RealEstateName,
-              opt => opt.MapFrom(src => src.RealEstateName)
-          )
-          .ForMember(
-              dest => dest.RealEstateAddress,
-              opt => opt.MapFrom(src => src.RealEstateAddress)
-          )
-          .ForMember(
-              dest => dest.Estimation,
-              opt => opt.MapFrom(src => src.Estimation)
-          ).ForMember(
-              dest => dest.Description,
-              opt => opt.MapFrom(src => src.Description)
-          )
-          .ForMember(
-              dest => dest.Status,
-              opt => opt.MapFrom(src => src.Status)
-          );
+            CreateMap<RealEstate, RealEstateResponseDTO>()
+           .ForMember(
+               dest => dest.RealEstateID,
+               opt => opt.MapFrom(src => src.RealEstateID)
+           )
+           .ForMember(
+               dest => dest.RealEstateName,
+               opt => opt.MapFrom(src => src.RealEstateName)
+           )
+           .ForMember(
+               dest => dest.RealEstateAddress,
+               opt => opt.MapFrom(src => src.RealEstateAddress)
+           )
+           .ForMember(
+               dest => dest.Estimation,
+               opt => opt.MapFrom(src => src.Estimation)
+           ).ForMember(
+               dest => dest.Description,
+               opt => opt.MapFrom(src => src.Description)
+           )
+           .ForMember(
+               dest => dest.Status,
+               opt => opt.MapFrom(src => src.Status)
+           )
+           .ForMember(
+               dest => dest.Image,
+               opt => opt.MapFrom(src => src.Image)
+           );
 
             CreateMap<RealEstateUpdateDTO, RealEstate>()
 
-         
+
          .ForMember(
              dest => dest.Estimation,
              opt => opt.MapFrom(src => src.Estimation)
@@ -78,14 +86,18 @@ namespace GroupProject.Mapper
          .ForMember(
              dest => dest.Status,
              opt => opt.MapFrom(src => src.Status)
+         )
+         .ForMember(
+             dest => dest.Image,
+             opt => opt.MapFrom(src => src.Image)
          );
-         
 
 
 
 
 
-        }
+
         }
     }
+}
 
