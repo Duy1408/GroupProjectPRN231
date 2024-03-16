@@ -1,7 +1,9 @@
 ﻿using BusinessObject.BusinessObject;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http.Headers;
+using System.Security.Claims;
 using System.Text.Json;
 
 namespace RealEstateClient.Pages.UserPage
@@ -26,7 +28,7 @@ namespace RealEstateClient.Pages.UserPage
         public RealEstate RealEstate { get; set; } = default!;
         public int RealEstateID;
 
-        
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
 
@@ -36,7 +38,13 @@ namespace RealEstateClient.Pages.UserPage
             {
                 return RedirectToPage("/Login"); // Không tìm thấy token trong cookie
             }
-            HttpResponseMessage response = await client.GetAsync($"{ApiUrl}/{id}");
+            var handler = new JwtSecurityTokenHandler();
+            var jsonToken = handler.ReadJwtToken(token) as JwtSecurityToken;
+            var userIdClaim = jsonToken?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+
+
+            HttpResponseMessage response = await client.GetAsync($"{ApiUrl}/{userIdClaim}");
             string strData = await response.Content.ReadAsStringAsync();
 
             var options = new JsonSerializerOptions
@@ -48,7 +56,7 @@ namespace RealEstateClient.Pages.UserPage
             var _realEstate = JsonSerializer.Deserialize<RealEstate>(strData, options)!;
 
             RealEstate = _realEstate;
-            
+
             User = _user;
             return Page();
         }
