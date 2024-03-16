@@ -59,10 +59,12 @@ namespace RealEstateClient.Pages
 
                         if (roleClaim?.Value == "1") //customer
                         {
+                            HttpContext.Response.Cookies.Append("UserCookie", token);
                             return RedirectToPage("./HomePage");
                         }
                         else if (roleClaim?.Value == "Admin") //Admin
                         {
+                            HttpContext.Response.Cookies.Append("AdminCookie", token);
                             return RedirectToPage("./AdminPage/UserPage/Index");
                         }
                     }
