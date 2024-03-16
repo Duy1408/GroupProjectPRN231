@@ -29,6 +29,7 @@ namespace DAO
             {
                 return _context.Users.Include(a => a.RealEstates)
                                      .Include(a => a.Comments).ToList();
+
             }
             catch (Exception ex)
             {

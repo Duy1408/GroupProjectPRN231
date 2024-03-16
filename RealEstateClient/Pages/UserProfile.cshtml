@@ -1,9 +1,7 @@
 ﻿@page
-@model RealEstateClient.Pages.ShowAllRealEstateModel
+@model RealEstateClient.Pages.UserProfileModel
 @{
 }
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,7 +12,7 @@
     <title>EstateAgency Bootstrap Template - Index</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
-    
+
     <!-- Favicons -->
     <link href="img/favicon.png" rel="icon">
     <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -34,6 +32,7 @@
 </head>
 
 <body>
+
     <!-- ======= Header/Navbar ======= -->
     <nav class="navbar navbar-default navbar-trans navbar-expand-lg fixed-top">
         <div class="container">
@@ -42,7 +41,7 @@
                 <span></span>
                 <span></span>
             </button>
-            <a class="navbar-brand text-brand" href="index.html">Estate<span class="color-b">Agency</span></a>
+            <a class="navbar-brand text-brand" asp-page="/HomePage">Estate<span class="color-b">Agency</span></a>
 
             <div class="navbar-collapse collapse justify-content-center" id="navbarDefault">
                 <ul class="navbar-nav">
@@ -73,8 +72,8 @@
                 <div class="row">
                     <div class="col-md-12 col-lg-8">
                         <div class="title-single-box">
-                            <h1 class="title-single">Our Amazing Properties</h1>
-                            <span class="color-text-a">Grid Properties</span>
+                            <h1 class="title-single">Margaret Stone</h1>
+                            <span class="color-text-a">Agent Immobiliari</span>
                         </div>
                     </div>
                     <div class="col-md-12 col-lg-4">
@@ -83,68 +82,118 @@
                                 <li class="breadcrumb-item">
                                     <a href="#">Home</a>
                                 </li>
+                                <li class="breadcrumb-item">
+                                    <a href="#">Agents</a>
+                                </li>
                                 <li class="breadcrumb-item active" aria-current="page">
-                                    Properties Grid
+                                    Margaret Stone
                                 </li>
                             </ol>
                         </nav>
                     </div>
                 </div>
             </div>
-        </section><!-- End Intro Single-->
-        <!-- ======= Property Grid ======= -->
-        <section class="property-grid grid">
+        </section><!-- End Intro Single -->
+        <!-- ======= Agent Single ======= -->
+        <section class="agent-single">
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12">
-                        <div class="grid-option">
-                            <form>
-                                <select class="custom-select">
-                                    <option selected>All</option>
-                                    <option value="1">New to Old</option>
-                                    <option value="2">For Rent</option>
-                                    <option value="3">For Sale</option>
-                                </select>
-                            </form>
-                        </div>
-                    </div>
-                    @foreach (var item in Model.RealEstate){
-                    <div class="col-md-4">
-                        <div class="card-box-a card-shadow">
-                            
-                            <div class="img-box-a">
-                                <img src="@Html.DisplayFor(modelItem => item.Image)" alt="" class="img-a img-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="agent-avatar-box">
+                                    <img src="img/pic3.jpg" alt="" class="agent-avatar img-fluid">
+                                </div>
                             </div>
-                            <div class="card-overlay">
-                                <div class="card-overlay-a-content">
-                                    <div class="card-header-a">
-                                        <h2 class="card-title-a">
-                                          @Html.DisplayFor(modelItem => item.RealEstateName)
-                                        </h2>
-                                    </div>
-                                    <div class="card-body-a">
-                                        <div class="price-box d-flex">
-                                         <span class="price-a">rent | @Html.DisplayFor(modelItem => item.Estimation)</span>
+                            <div class="col-md-5 section-md-t3">
+                                <div class="agent-info-box">
+                                    <div class="agent-title">
+                                        <div class="title-box-d">
+                                            <h3 class="title-d">
+                                                @Model.User.UserName
+                                                <br> @Model.User.FullName
+                                            </h3>
                                         </div>
-                                            <a asp-page="/RealEstateDetails" asp-route-id="@item.RealEstateID" class="link-a">
-                                            Click here to view
-                                            <span class="bi bi-chevron-right"></span>
-                                        </a>
                                     </div>
-                                    <div class="card-footer-a">
-                                        <ul class="card-info d-flex justify-content-around">
-                                                @Html.DisplayFor(modelItem => item.Description)
-                                        </ul>
+                                    <div class="agent-content mb-3">
+                                        <div class="info-agents color-a">
+                                            <p>
+                                                <strong>Phone: </strong>
+                                                <span class="color-text-a"> @Model.User.PhoneNumber </span>
+                                            </p>
+                                            <p>
+                                                <strong>Email: </strong>
+                                                <span class="color-text-a"> @Model.User.Email</span>
+                                            </p>
+                                            <p>
+                                                <strong>Bid Amount: </strong>
+                                                <span class="color-text-a"> @Model.User.BidID</span>
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                           
+                        </div>
+                    </div>
+                    <div class="col-md-12 section-t8">
+                        <div class="title-box-d">
+                            <h3 class="title-d">My Properties</h3>
+                        </div>
+                    </div>
+                    <div class="row property-grid grid">
+                        <div class="col-md-4">
+                            <div class="card-box-a card-shadow">
+                                <div class="img-box-a">
+                                    <img src="@Model.RealEstateID" alt="" class="img-a img-fluid">
+                                </div>
+                                <div class="card-overlay">
+                                    <div class="card-overlay-a-content">
+                                        <div class="card-header-a">
+                                            <h2 class="card-title-a">
+                                                @Model.RealEstate.RealEstateName
+                                            </h2>
+                                        </div>
+                                        <div class="card-body-a">
+                                            <div class="price-box d-flex">
+                                                <span class="price-a">rent | @Model.RealEstate.Estimation</span>
+                                            </div>
+                                            <a href="#" class="link-a">
+                                                Click here to view
+                                                <span class="bi bi-chevron-right"></span>
+                                            </a>
+                                        </div>
+                                        <div class="card-footer-a">
+                                            <ul class="card-info d-flex justify-content-around">
+                                                <li>
+                                                    <h4 class="card-info-title">Area</h4>
+                                                    <span>
+                                                        340m
+                                                        <sup>2</sup>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <h4 class="card-info-title">Beds</h4>
+                                                    <span>2</span>
+                                                </li>
+                                                <li>
+                                                    <h4 class="card-info-title">Baths</h4>
+                                                    <span>4</span>
+                                                </li>
+                                                <li>
+                                                    <h4 class="card-info-title">Garages</h4>
+                                                    <span>1</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     }
+                </div>
             </div>
-            </div>
-        </section><!-- End Property Grid Single-->
+        </section><!-- End Agent Single -->
 
     </main><!-- End #main -->
     <!-- ======= Footer ======= -->
@@ -307,13 +356,13 @@
     <div id="preloader"></div>
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-    <!-- Vendor JS Files -->
     <script src="lib/bootstrap/bootstrapindex/js/bootstrap.bundle.min.js"></script>
     <script src="lib/bootstrap/swiper/swiper-bundle.min.js"></script>
     <script src="assets/vendor/php-email-form/validate.js"></script>
 
     <!-- Template Main JS File -->
     <script src="js/site.js"></script>
+
 
 </body>
 

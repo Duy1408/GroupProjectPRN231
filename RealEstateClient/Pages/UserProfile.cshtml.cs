@@ -1,32 +1,37 @@
 ﻿using BusinessObject.BusinessObject;
+using BusinessObject.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http.Headers;
+using System.Security.Claims;
 using System.Text.Json;
 
-namespace RealEstateClient.Pages.UserPage
+namespace RealEstateClient.Pages
 {
-    public class ProfilePageModel : PageModel
+    public class UserProfileModel : PageModel
     {
         private readonly HttpClient client;
         private string ApiUrl = "";
 
-        public ProfilePageModel()
+        public UserProfileModel()
         {
             client = new HttpClient();
             var contentType = new MediaTypeWithQualityHeaderValue("application/json");
             client.DefaultRequestHeaders.Accept.Add(contentType);
             ApiUrl = "https://localhost:7088/api/Users";
         }
-
         [BindProperty]
         public User User { get; set; } = default!;
 
         public int UserID;
         public RealEstate RealEstate { get; set; } = default!;
+
+        public Bid Bid { get; set; } = default!;
         public int RealEstateID;
 
-        
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
 
@@ -36,7 +41,13 @@ namespace RealEstateClient.Pages.UserPage
             {
                 return RedirectToPage("/Login"); // Không tìm thấy token trong cookie
             }
-            HttpResponseMessage response = await client.GetAsync($"{ApiUrl}/{id}");
+            var handler = new JwtSecurityTokenHandler();
+            var jsonToken = handler.ReadJwtToken(token) as JwtSecurityToken;
+            var userIdClaim = jsonToken?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+
+
+            HttpResponseMessage response = await client.GetAsync($"{ApiUrl}/{userIdClaim}");
             string strData = await response.Content.ReadAsStringAsync();
 
             var options = new JsonSerializerOptions
@@ -45,11 +56,12 @@ namespace RealEstateClient.Pages.UserPage
             };
             var _user = JsonSerializer.Deserialize<User>(strData, options)!;
 
+            var _bid = JsonSerializer.Deserialize<Bid>(strData, options)!;
+
             var _realEstate = JsonSerializer.Deserialize<RealEstate>(strData, options)!;
 
             RealEstate = _realEstate;
-            
-            User = _user;
+             User = _user;
             return Page();
         }
     }

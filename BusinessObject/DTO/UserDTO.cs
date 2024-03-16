@@ -36,5 +36,6 @@ namespace BusinessObject.DTO
 
         [Required(ErrorMessage = "Bid is required.")]
         public int BidID { get; set; }
+
     }
 }
