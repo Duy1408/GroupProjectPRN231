@@ -1,6 +1,8 @@
 ﻿@page
 @model RealEstateClient.Pages.HomePageModel
-
+@{
+    var token = Request.Cookies["UserCookie"];
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -169,6 +171,32 @@
         </ul>
       </div>
             <!-- login Log out -->
+            <div class="header-action">
+                @if (string.IsNullOrEmpty(token))
+                {
+                    <button class="search-btn" aria-label="Search">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </button>
+
+                    <button class="btn btn-primary" onclick="window.location.href='./Login'">
+                        <span>Đăng nhập</span>
+                        <ion-icon name="log-in-outline"></ion-icon>
+                    </button>
+                }
+                else
+                {
+                    <button class="search-btn" aria-label="Search">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </button>
+
+                    <button class="btn btn-primary" onclick="window.location.href='./Logout'">
+                        <span>Logout</span>
+                        <ion-icon name="log-in-outline"></ion-icon>
+                    </button>
+                }
+
+
+            </div>
 
     </div>
   </nav><!-- End Header/Navbar -->

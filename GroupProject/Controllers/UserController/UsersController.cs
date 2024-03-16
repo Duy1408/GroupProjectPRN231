@@ -11,6 +11,7 @@ using AutoMapper;
 using BusinessObject.ViewModels;
 using System.Security.Principal;
 using BusinessObject.DTO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GroupProject.Controllers.UserController
 {

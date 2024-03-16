@@ -7,7 +7,7 @@ namespace RealEstateClient.Pages
     {
         public IActionResult OnGet()
         {
-            HttpContext.Session.Clear();
+            Response.Cookies.Delete("UserCookie");
             return RedirectToPage("/HomePage");
         }
     }

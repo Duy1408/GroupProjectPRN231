@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using BusinessObject.BusinessObject;
 using System.Net.Http.Headers;
 using System.Text.Json;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace RealEstateClient.Pages.AdminPage.UserPage
 {
@@ -25,27 +27,40 @@ namespace RealEstateClient.Pages.AdminPage.UserPage
 
         }
 
-        public IList<User> User { get;set; } = default!;
+        public IList<User> User { get; set; } = default!;
         public string Admin { get; private set; } = default!;
 
         public async Task<IActionResult> OnGetAsync()
         {
-                try
-                {
-                    Admin = HttpContext.Session.GetString("Admin")!;
-                    if (Admin != "Admin")
-                    {
-                        return NotFound();
-                    }
-                    if (Admin == null)
-                    {
-                        return NotFound();
-                    }
-                }
-                catch
-                {
-                    NotFound();
-                }
+            //try
+            //{
+            //    Admin = HttpContext.Session.GetString("Admin")!;
+            //    if (Admin != "Admin")
+            //    {
+            //        return NotFound();
+            //    }
+            //    if (Admin == null)
+            //    {
+            //        return NotFound();
+            //    }
+            //}
+            //catch
+            //{
+            //    NotFound();
+            //}
+
+            var token = HttpContext.Request.Cookies["AdminCookie"];
+
+            if (string.IsNullOrEmpty(token))
+            {
+                return RedirectToPage("/Login"); // Không tìm thấy token trong cookie
+            }
+
+            var handler = new JwtSecurityTokenHandler();
+            var jsonToken = handler.ReadJwtToken(token) as JwtSecurityToken;
+            var roleClaim = jsonToken?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
+            if (roleClaim?.Value == "Admin")
+            {
                 HttpResponseMessage response = await client.GetAsync(ApiUrl);
                 string strData = await response.Content.ReadAsStringAsync();
 
@@ -58,6 +73,10 @@ namespace RealEstateClient.Pages.AdminPage.UserPage
                 User = users;
 
                 return Page();
-         }
+            }
+
+            return Page();
+
+        }
     }
 }

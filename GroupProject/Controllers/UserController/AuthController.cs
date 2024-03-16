@@ -61,7 +61,7 @@ namespace GroupProject.Controllers.UserController
                         HttpOnly = true, // Chỉ có thể được đọc bằng cách sử dụng HTTP (không sử dụng JavaScript)
                         Secure = true,   // Chỉ sử dụng khi kết nối an toàn (HTTPS)
                         SameSite = SameSiteMode.None, // Hoặc SameSiteMode.Strict, tùy thuộc vào yêu cầu của ứng dụng
-                        Expires = DateTime.UtcNow.AddMinutes(10) // Thời gian hết hạn của cookie
+                        Expires = DateTime.UtcNow.AddMinutes(1) // Thời gian hết hạn của cookie
                     });
 
                     return Ok(new JwtSecurityTokenHandler().WriteToken(token));
@@ -96,7 +96,13 @@ namespace GroupProject.Controllers.UserController
 
                     var _token = new JwtSecurityTokenHandler().WriteToken(token);
 
-                    SetCookie("UserCookie", _token);
+                    HttpContext.Response.Cookies.Append("UserCookie", _token, new CookieOptions
+                    {
+                        HttpOnly = true, // Chỉ có thể được đọc bằng cách sử dụng HTTP (không sử dụng JavaScript)
+                        Secure = true,   // Chỉ sử dụng khi kết nối an toàn (HTTPS)
+                        SameSite = SameSiteMode.None, // Hoặc SameSiteMode.Strict, tùy thuộc vào yêu cầu của ứng dụng
+                        Expires = DateTime.UtcNow.AddMinutes(1) // Thời gian hết hạn của cookie
+                    });
 
                     return Ok(new JwtSecurityTokenHandler().WriteToken(token));
 
@@ -111,14 +117,7 @@ namespace GroupProject.Controllers.UserController
             }
         }
 
-        private void SetCookie(string nameCookie, string value)
-        {
-            CookieOptions cookieOptions = new();
-            cookieOptions.HttpOnly = true;
-            cookieOptions.Secure = true;
-            cookieOptions.Expires = DateTime.Now.AddMinutes(10);
-            HttpContext.Response.Cookies.Append(nameCookie, value);
-        }
+
 
     }
 }
